@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"
+        android:text="BUDGET BUDDY"
+        android:textAlignment="center"
+        android:textColor="#009688"
+        android:textSize="33dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="400dp"
+        android:backgroundTint="#009688"
+        android:text="SIGN IN" />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="450dp"
+        android:backgroundTint="#009688"
+        android:text="SIGN UP" />
+
+</RelativeLayout>
