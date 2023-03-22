@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "580716408149",
+    "project_id": "budgetbuddy-c09f6",
+    "storage_bucket": "budgetbuddy-c09f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580716408149:android:30bed7e72ea93b556d93dc",
+        "android_client_info": {
+          "package_name": "com.example.budgetbuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "580716408149-ah99qso18gf4robh8346gpo5sbvim80l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHjc_vV9T-PFtrxV2CSLjtV7IQ5ix7dNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "580716408149-ah99qso18gf4robh8346gpo5sbvim80l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
