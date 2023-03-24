@@ -24,6 +24,8 @@
         <activity android:name=".SignIn"/>
         <activity android:name=".SignUp"/>
         <activity android:name=".Dashboard"/>
+        <activity android:name=".Transactions"/>
+        <activity android:name=".Wallets"/>
     </application>
 
 </manifest>
