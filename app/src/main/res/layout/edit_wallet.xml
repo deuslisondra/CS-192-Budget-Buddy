@@ -26,6 +26,7 @@
         <EditText
             android:id="@+id/walletType"
             android:hint="Wallet Type"
+            android:textColorHint="@color/purple_700"
             android:inputType="textPersonName"
             android:textColor="@color/purple_500"
             android:textSize="18sp"
@@ -43,6 +44,7 @@
             android:hint="Balance"
             android:inputType="numberDecimal"
             android:textColor="@color/purple_500"
+            android:textColorHint="@color/purple_700"
             android:background="@drawable/wallet_dialog_shape"
             android:padding="15dp"
             android:textSize="18sp"
