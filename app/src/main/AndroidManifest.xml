@@ -26,6 +26,9 @@
         <activity android:name=".Dashboard"/>
         <activity android:name=".Transactions"/>
         <activity android:name=".Wallets"/>
+        <activity android:name=".UpdateTransaction"/>
+        <activity android:name=".AddTransaction"/>
+
     </application>
 
 </manifest>

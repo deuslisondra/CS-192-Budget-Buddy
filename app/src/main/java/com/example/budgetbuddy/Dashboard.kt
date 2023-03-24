@@ -9,9 +9,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Dashboard : AppCompatActivity() {
 
-    private lateinit var btnTransactions: Button
-    private lateinit var btnWallets: Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard)
@@ -27,6 +24,5 @@ class Dashboard : AppCompatActivity() {
             val intentWallets = Intent(this, Wallets::class.java)
             startActivity(intentWallets)
         }
-
     }
 }

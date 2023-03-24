@@ -11,6 +11,16 @@ class Transactions : AppCompatActivity() {
 
         setContentView(R.layout.transactions)
 
+        val btnUpdate = findViewById<Button>(R.id.btnUpdate) as Button
+        btnUpdate.setOnClickListener {
+            val intentUpdateTransaction = Intent(this, UpdateTransaction::class.java)
+            startActivity(intentUpdateTransaction)
+        }
 
+        val btnAdd = findViewById<Button>(R.id.btnAdd) as Button
+        btnAdd.setOnClickListener {
+            val intentAddTransaction = Intent(this, AddTransaction::class.java)
+            startActivity(intentAddTransaction)
+        }
     }
 }
