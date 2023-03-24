@@ -7,8 +7,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
+
 class SignUp : AppCompatActivity() {
     private lateinit var textUsername : EditText
     private lateinit var textPassword : EditText
@@ -41,7 +41,7 @@ class SignUp : AppCompatActivity() {
             saveUserData()
         }
 
-        val btnSignIn = findViewById<TextView>(R.id.textSignIn) as TextView
+        val btnSignIn = findViewById<TextView>(R.id.textSignIn)
         btnSignIn.setOnClickListener {
             val intentSignIn = Intent(this, SignIn::class.java)
             startActivity(intentSignIn)
@@ -55,38 +55,37 @@ class SignUp : AppCompatActivity() {
         val emailAddress = textEmailAddress.text.toString()
         val date = textDate.text.toString()
 
-        if(userName.isEmpty()){
-            textUsername.error = "Please enter username"
+        if(userName.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || fullName.isEmpty() || emailAddress.isEmpty() || date.isEmpty()){
+            Toast.makeText(this, "Please fill all the fields.", Toast.LENGTH_SHORT).show()
         }
-        if(password.isEmpty()){
-            textPassword.error = "Please enter password"
+        else if(password!=confirmPassword){
+            Toast.makeText(this, "Password does not match.", Toast.LENGTH_SHORT).show()
         }
-        if(confirmPassword.isEmpty()){
-            textConfirmPassword.error = "Please confirm password"
-        }
-        if(fullName.isEmpty()){
-            textFullName.error = "Please enter full name"
-        }
-        if(emailAddress.isEmpty()){
-            textEmailAddress.error = "Please enter email address"
-        }
-        if(date.isEmpty()){
-            textDate.error = "Please enter birthday"
-        }
-        if(password!=confirmPassword){
-            textPassword.error = "Password does not match"
-            textConfirmPassword.error = "Confirm does not match"
-        }
-        val userID = dbRef.push().key!!
+        else{
+            dbRef.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.hasChild(userName)){
+                        Toast.makeText(applicationContext, "Username already exists", Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        val user = UserModel(userName, password, fullName, emailAddress, date)
+                        dbRef.child(userName).setValue(user)
+                            .addOnCompleteListener {
+                                val intentSignIn = Intent(applicationContext, SignIn::class.java)
+                                startActivity(intentSignIn)
+                            }.addOnFailureListener {err ->
+                                Toast.makeText(applicationContext, "Error ${err.message}", Toast.LENGTH_LONG).show()
+                            }
+                    }
+                }
 
-        val user = UserModel(userID, userName, password, fullName, emailAddress, date)
-        dbRef.child(userID).setValue(user)
-            .addOnCompleteListener {
-                Toast.makeText(this,"User successfully added!", Toast.LENGTH_LONG).show()
-                val intentSignIn = Intent(this, SignIn::class.java)
-                startActivity(intentSignIn)
-            }.addOnFailureListener {err ->
-                Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_LONG).show()
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+
         }
+
     }
 }

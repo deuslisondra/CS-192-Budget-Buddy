@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
 
 class SignIn : AppCompatActivity() {
-    private var match : Boolean = false
     private lateinit var textUsername: EditText
     private lateinit var textPassword: EditText
 
@@ -28,14 +27,6 @@ class SignIn : AppCompatActivity() {
 
         btnSignIn.setOnClickListener {
             checkUser()
-            if(match){
-                Toast.makeText(this,"Signed in successfully", Toast.LENGTH_SHORT).show()
-                val intentDashboard = Intent(this, Dashboard::class.java)
-                startActivity(intentDashboard)
-            }
-            else{
-                Toast.makeText(this,"Invalid username or password", Toast.LENGTH_SHORT).show()
-            }
         }
 
         val btnSignUp = findViewById<TextView>(R.id.textSignUp) as TextView
@@ -49,23 +40,25 @@ class SignIn : AppCompatActivity() {
         val userName: String = textUsername.text.toString()
         val password: String = textPassword.text.toString()
         dbRef = FirebaseDatabase.getInstance().getReference("Users")
-        dbRef.addValueEventListener(object : ValueEventListener {
+        dbRef.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (userSnap in snapshot.children) {
-                        val userData = userSnap.getValue(UserModel::class.java)
-                        Log.d("UserName", userData!!.userName.toString())
-                        Log.d("UserPassword", userData.userPassword.toString())
-
-                        if (userData.userName.toString() == userName && userData.userPassword.toString() == password) {
-                            match = true
-                        }
+                if(snapshot.hasChild(userName)){
+                    val userPassword = snapshot.child(userName).child("userPassword").getValue(String::class.java)
+                    if(userPassword==password){
+                        val intentDashboard = Intent(applicationContext, Dashboard::class.java)
+                        startActivity(intentDashboard)
                     }
+                    else{
+                        Toast.makeText(applicationContext, "Username and password does not match!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else{
+                    Toast.makeText(applicationContext, "Username does not exist", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+                TODO("Not yet implemented")
             }
         })
     }
