@@ -1,6 +1,7 @@
 package com.example.budgetbuddy
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -17,6 +18,8 @@ class SignIn : AppCompatActivity() {
     private lateinit var btnSignIn: Button
 
     private lateinit var dbRef: DatabaseReference
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +27,8 @@ class SignIn : AppCompatActivity() {
         textUsername = findViewById(R.id.textUsername)
         textPassword = findViewById(R.id.textPassword)
         btnSignIn = findViewById(R.id.btnSignIn)
+
+        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
 
         btnSignIn.setOnClickListener {
             checkUser()
@@ -45,6 +50,11 @@ class SignIn : AppCompatActivity() {
                 if(snapshot.hasChild(userName)){
                     val userPassword = snapshot.child(userName).child("userPassword").getValue(String::class.java)
                     if(userPassword==password){
+
+                        val editor = sharedPreferences.edit()
+                        editor.putString("username", userName)
+                        editor.apply()
+
                         val intentDashboard = Intent(applicationContext, Dashboard::class.java)
                         startActivity(intentDashboard)
                     }
