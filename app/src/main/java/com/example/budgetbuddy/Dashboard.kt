@@ -24,5 +24,17 @@ class Dashboard : AppCompatActivity() {
             val intentWallets = Intent(this, Wallets::class.java)
             startActivity(intentWallets)
         }
+
+        val btnProfile = findViewById<Button>(R.id.btnProfile) as Button
+        btnProfile.setOnClickListener {
+            val intentProfile = Intent(this, Profile::class.java)
+            startActivity(intentProfile)
+        }
+
+        val btnSettings = findViewById<Button>(R.id.btnSettings) as Button
+        btnSettings.setOnClickListener {
+            val intentSettings = Intent(this, Settings::class.java)
+            startActivity(intentSettings)
+        }
     }
 }

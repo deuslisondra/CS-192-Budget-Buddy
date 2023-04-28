@@ -7,20 +7,42 @@
 
     <Button
         android:id="@+id/btnTransactions"
-        android:layout_width="155dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="600dp"
         android:backgroundTint="#009688"
         android:layout_marginLeft="30dp"
+        android:textSize="10dp"
         android:text="transactions" />
 
     <Button
         android:id="@+id/btnWallets"
-        android:layout_width="155dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="600dp"
         android:backgroundTint="#009688"
-        android:layout_marginLeft="190dp"
+        android:layout_marginLeft="160dp"
+        android:textSize="10dp"
         android:text="wallets" />
+
+    <Button
+        android:id="@+id/btnProfile"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="600dp"
+        android:backgroundTint="#009688"
+        android:layout_marginLeft="270dp"
+        android:textSize="10dp"
+        android:text="profile" />
+
+    <Button
+        android:id="@+id/btnSettings"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#009688"
+        android:layout_marginLeft="270dp"
+        android:textSize="10dp"
+        android:text="settings" />
 
 </RelativeLayout>

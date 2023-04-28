@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="25dp"
+        android:text="Settings" />
+
+    <TextView
+        android:id="@+id/textTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="60dp"
+        android:textSize="20dp"
+        android:text="Theme:" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioTheme"
+        android:layout_marginTop="185dp"
+        android:layout_marginLeft="90dp">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/radioLight"
+            android:text="Light mode"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/radioDark"
+            android:text="Dark mode"
+            />
+
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/textCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="280dp"
+        android:layout_marginLeft="60dp"
+        android:textSize="20dp"
+        android:text="Currency:" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioCurrency"
+        android:layout_marginTop="315dp"
+        android:layout_marginLeft="90dp">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/radioPeso"
+            android:text="Philippine Peso"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/radioUSD"
+            android:text="US Dollar"
+            />
+
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/textGraph"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="410dp"
+        android:layout_marginLeft="60dp"
+        android:textSize="20dp"
+        android:text="Graph:" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGraph"
+        android:layout_marginTop="445dp"
+        android:layout_marginLeft="90dp">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/radioBar"
+            android:text="Bar Graph"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/radioPie"
+            android:text="Pie Graph"
+            />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnSaveSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="save changes"
+        android:layout_marginTop="550dp"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>
