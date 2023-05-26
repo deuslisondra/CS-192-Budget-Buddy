@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/mSubTitleAmount"
-                android:text="Amount: +240.00"
+                android:text="Amount: 240.00"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="15sp"
                 android:textStyle="bold"

@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"/>
         <EditText
             android:id="@+id/transactionBalance"
-            android:hint="Balance"
+            android:hint="Amount"
             android:inputType="numberDecimal"
             android:textColorHint="@color/purple_700"
             android:textColor="@color/purple_500"

@@ -49,26 +49,6 @@ class Wallets : AppCompatActivity() {
 
         addsBtn = findViewById(R.id.addWalletButton)
         addsBtn.setOnClickListener { addInfo() }
-
-        /* editBtn = findViewById(R.id.walletEdit)
-        editBtn.setOnClickListener { editInfo() }
-
-        dltBtn = findViewById(R.id.walletDelete)
-        dltBtn.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            builder.setMessage("Are you sure you want to delete wallet?")
-                .setCancelable(false)
-                .setPositiveButton("Yes") { dialog, _->
-                    Toast.makeText(this,"Deleting Wallet Information Success",Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
-                }
-                .setNegativeButton("No") { dialog, _->
-                    // Dismiss the dialog
-                    dialog.dismiss()
-                }
-            val alert = builder.create()
-            alert.show()
-        }*/
     }
 
     private fun addInfo() {
@@ -226,11 +206,8 @@ class Wallets : AppCompatActivity() {
 
                     wltRecyclerView.visibility = View.VISIBLE
                     wltLoadingData.visibility = View.GONE
-
-
                 }
             }
-
             override fun onCancelled(error: DatabaseError){
                 TODO()
             }
