@@ -1,6 +1,7 @@
 package com.example.budgetbuddy
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -32,10 +33,12 @@ class Wallets : AppCompatActivity() {
     private lateinit var wltCncl : Button
     private lateinit var dbRef2 : DatabaseReference
 
+    private lateinit var dialog: AlertDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.wallet_layout)
+        setContentView(R.layout.wallet_fetch)
         wltRecyclerView = findViewById(R.id.rvWlt)
         wltRecyclerView.layoutManager = LinearLayoutManager(this)
         wltRecyclerView.setHasFixedSize(true)
@@ -47,7 +50,7 @@ class Wallets : AppCompatActivity() {
         addsBtn = findViewById(R.id.addWalletButton)
         addsBtn.setOnClickListener { addInfo() }
 
-        editBtn = findViewById(R.id.walletEdit)
+        /* editBtn = findViewById(R.id.walletEdit)
         editBtn.setOnClickListener { editInfo() }
 
         dltBtn = findViewById(R.id.walletDelete)
@@ -65,7 +68,7 @@ class Wallets : AppCompatActivity() {
                 }
             val alert = builder.create()
             alert.show()
-        }
+        }*/
     }
 
     private fun addInfo() {
@@ -80,23 +83,60 @@ class Wallets : AppCompatActivity() {
         wltOk = v.findViewById<Button>(R.id.btnOk)
         wltCncl = v.findViewById<Button>(R.id.btnCancel)
         dbRef2 = FirebaseDatabase.getInstance().getReference("Users/$userName/Wallets")
+        val addDialog = AlertDialog.Builder(this)
+
 
         wltOk.setOnClickListener{
             saveWalletData()
         }
 
-        val addDialog = AlertDialog.Builder(this)
         addDialog.setView(v)
-        addDialog.create()
-        addDialog.show()
+        dialog = addDialog.create()
+        dialog.show()
     }
-    private fun editInfo() {
+    private fun editInfo(wallet: WalletModel) {
         val popUpWallet = LayoutInflater.from(this)
         val v = popUpWallet.inflate(R.layout.edit_wallet,null)
-        val addDialog = AlertDialog.Builder(this)
-        addDialog.setView(v)
-        addDialog.create()
-        addDialog.show()
+
+        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val userName = sharedPreferences.getString("username", "")
+
+        wltType = v.findViewById<EditText>(R.id.walletType)
+        wltAmt = v.findViewById<EditText>(R.id.walletAmount)
+        wltOk = v.findViewById<Button>(R.id.btnOk)
+        wltCncl = v.findViewById<Button>(R.id.btnCancel)
+
+        // Pre-populate the fields with the current wallet data
+        wltType.setText(wallet.addWalletType)
+        wltAmt.setText(wallet.addWalletAmt)
+
+        dbRef2 = FirebaseDatabase.getInstance().getReference("Users/$userName/Wallets").child(wallet.wltId!!)
+        val editDialog = AlertDialog.Builder(this)
+
+        wltOk.setOnClickListener{
+            updateWalletData(wallet)
+        }
+
+        editDialog.setView(v)
+        dialog = editDialog.create()
+        dialog.show()
+    }
+
+    private fun deleteInfo(wallet: WalletModel) {
+
+        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val userName = sharedPreferences.getString("username", "")
+
+        dbRef2 = FirebaseDatabase.getInstance().getReference("Users/$userName/Wallets").child(wallet.wltId!!)
+
+        val mTask = dbRef2.removeValue()
+
+        mTask.addOnSuccessListener {
+            Toast.makeText(this, "Wallet data deleted", Toast.LENGTH_LONG).show()
+
+        }.addOnFailureListener{ error ->
+            Toast.makeText(this, "Deleting Err ${error.message}", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun saveWalletData() {
@@ -118,6 +158,34 @@ class Wallets : AppCompatActivity() {
         dbRef2.child(wltId).setValue(newWallet)
             .addOnCompleteListener {
                 Toast.makeText(this, "Wallet added successfully", Toast.LENGTH_LONG).show()
+                dialog.dismiss()
+            }.addOnFailureListener { err ->
+                Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_LONG).show()
+            }
+    }
+
+    private fun updateWalletData(wallet: WalletModel) {
+        val updatedWalletType = wltType.text.toString()
+        val updatedWalletAmt = wltAmt.text.toString()
+
+        if (updatedWalletType.isEmpty()) {
+            wltType.error = "Please enter wallet type"
+            return
+        }
+        if (updatedWalletAmt.isEmpty()) {
+            wltAmt.error = "Please enter wallet amount"
+            return
+        }
+
+        val updates = mapOf<String, Any>(
+            "addWalletType" to updatedWalletType,
+            "addWalletAmt" to updatedWalletAmt
+        )
+
+        dbRef2.updateChildren(updates)
+            .addOnCompleteListener {
+                Toast.makeText(this, "Wallet updated successfully", Toast.LENGTH_LONG).show()
+                dialog.dismiss()
             }.addOnFailureListener { err ->
                 Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_LONG).show()
             }
@@ -143,8 +211,23 @@ class Wallets : AppCompatActivity() {
                     val wAdapter = WltAdapter(wltList)
                     wltRecyclerView.adapter = wAdapter
 
+                    wAdapter.setOnItemClickListener(object: WltAdapter.onItemClickListener{
+                        override fun onItemClick(position: Int, isEdit: Boolean) {
+                            val selectedWallet = wltList[position]
+                            if (isEdit) {
+                                Log.d("WltAdapter", "Edit button clicked for position $position")
+                                editInfo(selectedWallet)
+                            } else {
+                                Log.d("WltAdapter", "Delete button clicked for position $position")
+                                deleteInfo(selectedWallet)
+                            }
+                        }
+                    })
+
                     wltRecyclerView.visibility = View.VISIBLE
                     wltLoadingData.visibility = View.GONE
+
+
                 }
             }
 
